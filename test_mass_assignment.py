@@ -69,6 +69,41 @@ class MassAssignmentTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    def test_request_without_json_rejected(self):
+        response = self.client.patch(
+            "/api/profile",
+            data="email=new@example.com"
+        )
+        self.assertEqual(response.status_code, 400)
 
+    def test_malformed_json_rejected(self):
+        response = self.client.patch(
+            "/api/profile",
+            data='{"email":',
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_non_string_email_rejected(self):
+        response = self.client.patch(
+            "/api/profile",
+            json={"email": 12345}
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_whitespace_email_rejected(self):
+        response = self.client.patch(
+            "/api/profile",
+            json={"email": "   "}
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_username_change_rejected(self):
+        response = self.client.patch(
+            "/api/profile",
+            json={"username": "attacker"}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(users["alice"]["username"], "alice")
 if __name__ == "__main__":
     unittest.main()

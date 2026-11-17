@@ -77,15 +77,20 @@ The fixed API was manually tested.
 
 ## 8. Automated Testing
 
-Five Python unittest cases were implemented:
+Ten Python unittest cases were implemented and executed:
 
 1. Legitimate email update.
 2. Role modification rejection.
 3. Administrator privilege modification rejection.
 4. Mixed request rejection.
 5. Empty email rejection.
+6. Request without JSON rejection.
+7. Malformed JSON rejection.
+8. Non-string email rejection.
+9. Whitespace-only email rejection.
+10. Unauthorized username modification rejection.
 
-Result: 5/5 tests passed.
+Result: 10/10 tests passed.
 
 ## 9. Security Lessons
 
@@ -106,6 +111,8 @@ The exercise demonstrates mass assignment and its remediation, not a complete pr
 
 ## 11. Conclusion
 
-The investigation successfully demonstrated a mass-assignment vulnerability, reproduced its privilege-escalation impact, implemented an allowlist-based remediation, and verified the fix through five passing automated tests.
+The investigation successfully demonstrated mass assignment risks, implemented an allowlist-based remediation, and verified the security controls through ten automated tests.
+
+All ten tests passed, confirming that the local application accepts permitted email updates while rejecting unauthorized property modifications.
 
 All testing was performed against a locally controlled application.
